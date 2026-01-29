@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Calendar } from "@/components/ui/calendar";
-import { Clock, MapPin, Video, ArrowRight, Check } from "lucide-react";
+import { Clock, MapPin, Video, ArrowRight, Check, CreditCard, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const timeSlots = [
   "9:00 AM",
@@ -21,6 +23,7 @@ const consultationTypes = [
     title: "In-Person",
     description: "Visit our studio for a personalized consultation",
     duration: "90 minutes",
+    price: 25000, // Price in Naira
   },
   {
     id: "virtual",
@@ -28,8 +31,16 @@ const consultationTypes = [
     title: "Virtual",
     description: "Connect via video call from the comfort of your home",
     duration: "60 minutes",
+    price: 15000, // Price in Naira
   },
 ];
+
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+  }).format(price);
+};
 
 const BookingCalendar = () => {
   const [date, setDate] = useState<Date | undefined>();
@@ -43,10 +54,57 @@ const BookingCalendar = () => {
     message: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const selectedConsultation = consultationTypes.find((t) => t.id === consultationType);
+
+  const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    
+    if (!selectedConsultation || !date || !selectedTime) {
+      toast({
+        title: "Missing information",
+        description: "Please complete all booking steps",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsProcessing(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke("paystack-init", {
+        body: {
+          email: formData.email,
+          amount: selectedConsultation.price,
+          name: formData.name,
+          consultationType: selectedConsultation.title,
+          date: date.toISOString(),
+          time: selectedTime,
+          phone: formData.phone,
+          message: formData.message,
+        },
+      });
+
+      if (error) throw error;
+
+      if (data?.status && data?.data?.authorization_url) {
+        // Redirect to Paystack checkout
+        window.location.href = data.data.authorization_url;
+      } else {
+        throw new Error(data?.message || "Failed to initialize payment");
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      toast({
+        title: "Payment Error",
+        description: error instanceof Error ? error.message : "Failed to process payment",
+        variant: "destructive",
+      });
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const isDateDisabled = (date: Date) => {
@@ -102,7 +160,7 @@ const BookingCalendar = () => {
           <p className="label-refined mb-4">Book a Consultation</p>
           <h2 className="heading-section mb-6">Let's Create Together</h2>
           <p className="body-elegant max-w-2xl mx-auto text-muted-foreground">
-            Schedule a complimentary consultation to discuss your project. 
+            Schedule a consultation to discuss your project. 
             We'll explore your vision, answer questions, and outline next steps.
           </p>
         </motion.div>
@@ -166,10 +224,15 @@ const BookingCalendar = () => {
                     <p className="text-muted-foreground text-sm mb-3">
                       {type.description}
                     </p>
-                    <p className="label-refined flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
-                      {type.duration}
-                    </p>
+                    <div className="flex items-center justify-between">
+                      <p className="label-refined flex items-center gap-2">
+                        <Clock className="w-4 h-4" />
+                        {type.duration}
+                      </p>
+                      <p className="font-serif text-lg text-primary font-medium">
+                        {formatPrice(type.price)}
+                      </p>
+                    </div>
                   </button>
                 ))}
               </div>
@@ -241,7 +304,7 @@ const BookingCalendar = () => {
             </motion.div>
           )}
 
-          {/* Step 3: Contact Info */}
+          {/* Step 3: Contact Info & Payment */}
           {step === 3 && (
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -249,9 +312,9 @@ const BookingCalendar = () => {
               exit={{ opacity: 0, x: 20 }}
             >
               <h3 className="font-serif text-2xl mb-8 text-center">
-                Your Information
+                Your Information & Payment
               </h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handlePayment} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="label-refined block mb-2">Full Name</label>
@@ -289,7 +352,7 @@ const BookingCalendar = () => {
                       setFormData({ ...formData, phone: e.target.value })
                     }
                     className="w-full px-4 py-3 border border-border bg-background focus:border-primary focus:outline-none transition-colors"
-                    placeholder="(555) 123-4567"
+                    placeholder="+234 123 456 7890"
                   />
                 </div>
                 <div>
@@ -307,14 +370,13 @@ const BookingCalendar = () => {
                   />
                 </div>
 
-                {/* Summary */}
+                {/* Payment Summary */}
                 <div className="p-6 bg-secondary/50 rounded-sm">
                   <p className="label-refined mb-3">Booking Summary</p>
                   <div className="space-y-2 text-sm">
                     <p>
                       <strong>Type:</strong>{" "}
-                      {consultationTypes.find((t) => t.id === consultationType)
-                        ?.title || ""}{" "}
+                      {selectedConsultation?.title || ""}{" "}
                       Consultation
                     </p>
                     <p>
@@ -330,6 +392,14 @@ const BookingCalendar = () => {
                       <strong>Time:</strong> {selectedTime}
                     </p>
                   </div>
+                  <div className="mt-4 pt-4 border-t border-border">
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">Total Amount</span>
+                      <span className="font-serif text-2xl text-primary font-medium">
+                        {selectedConsultation ? formatPrice(selectedConsultation.price) : ""}
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex justify-between">
@@ -337,11 +407,26 @@ const BookingCalendar = () => {
                     type="button"
                     onClick={() => setStep(2)}
                     className="btn-outline"
+                    disabled={isProcessing}
                   >
                     Back
                   </button>
-                  <button type="submit" className="btn-primary">
-                    Confirm Booking
+                  <button 
+                    type="submit" 
+                    className="btn-primary inline-flex items-center gap-2"
+                    disabled={isProcessing}
+                  >
+                    {isProcessing ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        <CreditCard className="w-4 h-4" />
+                        Pay & Confirm Booking
+                      </>
+                    )}
                   </button>
                 </div>
               </form>

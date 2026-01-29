@@ -31,7 +31,7 @@ const Header = () => {
     >
       <div className="container-narrow flex items-center justify-between">
         <a href="#" className="font-serif text-2xl md:text-3xl font-medium tracking-tight">
-          Élise Interiors
+          DSR Interiors
         </a>
 
         {/* Desktop Navigation */}

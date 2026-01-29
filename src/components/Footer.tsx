@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <h3 className="font-serif text-3xl mb-6">Élise Interiors</h3>
+            <h3 className="font-serif text-3xl mb-6">DSR Interiors</h3>
             <p className="text-primary-foreground/70 max-w-md mb-8 leading-relaxed">
               Creating timeless, sophisticated interiors that reflect your
               unique personality and elevate everyday living. Let's transform
@@ -85,7 +85,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-primary-foreground/50 text-sm">
-            © {new Date().getFullYear()} Élise Interiors. All rights reserved.
+            © {new Date().getFullYear()} DSR Interiors. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm">
             <a

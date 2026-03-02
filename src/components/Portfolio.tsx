@@ -26,6 +26,7 @@ interface PortfolioItem {
 }
 
 const portfolioItems: PortfolioItem[] = [
+  // Project Caracal
   { id: 1, image: caracal1, title: "Caracal Reception", category: "Project Caracal", type: "image" },
   { id: 2, image: caracal2, title: "Caracal Lounge", category: "Project Caracal", type: "image" },
   { id: 3, image: caracal3, title: "Caracal Corridor", category: "Project Caracal", type: "image" },
@@ -36,9 +37,11 @@ const portfolioItems: PortfolioItem[] = [
   { id: 8, image: caracal8, title: "Caracal Executive", category: "Project Caracal", type: "image" },
   { id: 9, image: caracal9, title: "Caracal Pantry", category: "Project Caracal", type: "image" },
   { id: 10, image: caracal10, title: "Caracal Meeting Room", category: "Project Caracal", type: "image" },
+  // Project MSM
   { id: 11, image: msm1, title: "MSM Living Room", category: "Project MSM", type: "image" },
   { id: 12, image: msm2, title: "MSM Lounge", category: "Project MSM", type: "image" },
   { id: 13, image: msm3, title: "MSM Kitchen", category: "Project MSM", type: "image" },
+  // Residential Project - upload images to populate
 ];
 
 const Portfolio = () => {

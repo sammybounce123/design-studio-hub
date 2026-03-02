@@ -8,6 +8,16 @@ import portfolio3 from "@/assets/portfolio-3.jpg";
 import portfolio4 from "@/assets/portfolio-4.jpg";
 import portfolio5 from "@/assets/portfolio-5.jpg";
 import portfolio6 from "@/assets/portfolio-6.jpg";
+import caracal1 from "@/assets/caracal-1.jpg";
+import caracal2 from "@/assets/caracal-2.jpg";
+import caracal3 from "@/assets/caracal-3.jpg";
+import caracal4 from "@/assets/caracal-4.jpg";
+import caracal5 from "@/assets/caracal-5.jpg";
+import caracal6 from "@/assets/caracal-6.jpg";
+import caracal7 from "@/assets/caracal-7.jpg";
+import caracal8 from "@/assets/caracal-8.jpg";
+import caracal9 from "@/assets/caracal-9.jpg";
+import caracal10 from "@/assets/caracal-10.jpg";
 
 interface PortfolioItem {
   id: number;
@@ -25,6 +35,16 @@ const portfolioItems: PortfolioItem[] = [
   { id: 4, image: portfolio4, title: "Spa Sanctuary", category: "Bathroom", type: "image" },
   { id: 5, image: portfolio5, title: "Creative Studio", category: "Home Office", type: "video", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
   { id: 6, image: portfolio6, title: "Welcoming Entry", category: "Foyer", type: "image" },
+  { id: 7, image: caracal1, title: "Caracal Reception", category: "Project Caracal", type: "image" },
+  { id: 8, image: caracal2, title: "Caracal Lounge", category: "Project Caracal", type: "image" },
+  { id: 9, image: caracal3, title: "Caracal Corridor", category: "Project Caracal", type: "image" },
+  { id: 10, image: caracal4, title: "Caracal Boardroom", category: "Project Caracal", type: "image" },
+  { id: 11, image: caracal5, title: "Caracal Conference", category: "Project Caracal", type: "image" },
+  { id: 12, image: caracal6, title: "Caracal Workspace", category: "Project Caracal", type: "image" },
+  { id: 13, image: caracal7, title: "Caracal Office", category: "Project Caracal", type: "image" },
+  { id: 14, image: caracal8, title: "Caracal Executive", category: "Project Caracal", type: "image" },
+  { id: 15, image: caracal9, title: "Caracal Pantry", category: "Project Caracal", type: "image" },
+  { id: 16, image: caracal10, title: "Caracal Meeting Room", category: "Project Caracal", type: "image" },
 ];
 
 const Portfolio = () => {

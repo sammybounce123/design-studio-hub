@@ -15,6 +15,12 @@ import caracal10 from "@/assets/caracal-10.jpg";
 import msm1 from "@/assets/msm-1.jpg";
 import msm2 from "@/assets/msm-2.jpg";
 import msm3 from "@/assets/msm-3.jpg";
+import msm4 from "@/assets/msm-4.jpg";
+import msm5 from "@/assets/msm-5.jpg";
+import msm6 from "@/assets/msm-6.jpg";
+import msm7 from "@/assets/msm-7.jpg";
+import msm8 from "@/assets/msm-8.jpg";
+import msm9 from "@/assets/msm-9.jpg";
 import residential1 from "@/assets/residential-1.jpg";
 import residential2 from "@/assets/residential-2.jpg";
 import residential3 from "@/assets/residential-3.jpg";
@@ -46,6 +52,16 @@ const portfolioItems: PortfolioItem[] = [
   { id: 8, image: caracal8, title: "Executive Office", category: "Project Caracal", type: "image" },
   { id: 9, image: caracal9, title: "Pantry", category: "Project Caracal", type: "image" },
   { id: 10, image: caracal10, title: "Meeting Room", category: "Project Caracal", type: "image" },
+  // Project MSM
+  { id: 20, image: msm1, title: "Boardroom", category: "Project MSM", type: "image" },
+  { id: 21, image: msm2, title: "Shelf Detail", category: "Project MSM", type: "image" },
+  { id: 22, image: msm3, title: "Executive Office", category: "Project MSM", type: "image" },
+  { id: 23, image: msm4, title: "Lounge Detail", category: "Project MSM", type: "image" },
+  { id: 24, image: msm5, title: "Glass Corridor", category: "Project MSM", type: "image" },
+  { id: 25, image: msm6, title: "Open Workspace", category: "Project MSM", type: "image" },
+  { id: 26, image: msm7, title: "Office Hallway", category: "Project MSM", type: "image" },
+  { id: 27, image: msm8, title: "Break Room", category: "Project MSM", type: "image" },
+  { id: 28, image: msm9, title: "Reception", category: "Project MSM", type: "image" },
   // Residential Project
   { id: 11, image: residential1, title: "Living Room", category: "Residential Project", type: "image" },
   { id: 12, image: residential2, title: "Living Area", category: "Residential Project", type: "image" },

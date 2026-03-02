@@ -2,12 +2,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, X } from "lucide-react";
 
-import portfolio1 from "@/assets/portfolio-1.jpg";
-import portfolio2 from "@/assets/portfolio-2.jpg";
-import portfolio3 from "@/assets/portfolio-3.jpg";
-import portfolio4 from "@/assets/portfolio-4.jpg";
-import portfolio5 from "@/assets/portfolio-5.jpg";
-import portfolio6 from "@/assets/portfolio-6.jpg";
 import caracal1 from "@/assets/caracal-1.jpg";
 import caracal2 from "@/assets/caracal-2.jpg";
 import caracal3 from "@/assets/caracal-3.jpg";
@@ -32,25 +26,19 @@ interface PortfolioItem {
 }
 
 const portfolioItems: PortfolioItem[] = [
-  { id: 1, image: portfolio1, title: "Serene Retreat", category: "Bedroom", type: "image" },
-  { id: 2, image: portfolio2, title: "Culinary Haven", category: "Kitchen", type: "video", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { id: 3, image: portfolio3, title: "Grand Dining", category: "Dining Room", type: "image" },
-  { id: 4, image: portfolio4, title: "Spa Sanctuary", category: "Bathroom", type: "image" },
-  { id: 5, image: portfolio5, title: "Creative Studio", category: "Home Office", type: "video", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { id: 6, image: portfolio6, title: "Welcoming Entry", category: "Foyer", type: "image" },
-  { id: 7, image: caracal1, title: "Caracal Reception", category: "Project Caracal", type: "image" },
-  { id: 8, image: caracal2, title: "Caracal Lounge", category: "Project Caracal", type: "image" },
-  { id: 9, image: caracal3, title: "Caracal Corridor", category: "Project Caracal", type: "image" },
-  { id: 10, image: caracal4, title: "Caracal Boardroom", category: "Project Caracal", type: "image" },
-  { id: 11, image: caracal5, title: "Caracal Conference", category: "Project Caracal", type: "image" },
-  { id: 12, image: caracal6, title: "Caracal Workspace", category: "Project Caracal", type: "image" },
-  { id: 13, image: caracal7, title: "Caracal Office", category: "Project Caracal", type: "image" },
-  { id: 14, image: caracal8, title: "Caracal Executive", category: "Project Caracal", type: "image" },
-  { id: 15, image: caracal9, title: "Caracal Pantry", category: "Project Caracal", type: "image" },
-  { id: 16, image: caracal10, title: "Caracal Meeting Room", category: "Project Caracal", type: "image" },
-  { id: 17, image: msm1, title: "MSM Living Room", category: "Project MSM", type: "image" },
-  { id: 18, image: msm2, title: "MSM Lounge", category: "Project MSM", type: "image" },
-  { id: 19, image: msm3, title: "MSM Kitchen", category: "Project MSM", type: "image" },
+  { id: 1, image: caracal1, title: "Caracal Reception", category: "Project Caracal", type: "image" },
+  { id: 2, image: caracal2, title: "Caracal Lounge", category: "Project Caracal", type: "image" },
+  { id: 3, image: caracal3, title: "Caracal Corridor", category: "Project Caracal", type: "image" },
+  { id: 4, image: caracal4, title: "Caracal Boardroom", category: "Project Caracal", type: "image" },
+  { id: 5, image: caracal5, title: "Caracal Conference", category: "Project Caracal", type: "image" },
+  { id: 6, image: caracal6, title: "Caracal Workspace", category: "Project Caracal", type: "image" },
+  { id: 7, image: caracal7, title: "Caracal Office", category: "Project Caracal", type: "image" },
+  { id: 8, image: caracal8, title: "Caracal Executive", category: "Project Caracal", type: "image" },
+  { id: 9, image: caracal9, title: "Caracal Pantry", category: "Project Caracal", type: "image" },
+  { id: 10, image: caracal10, title: "Caracal Meeting Room", category: "Project Caracal", type: "image" },
+  { id: 11, image: msm1, title: "MSM Living Room", category: "Project MSM", type: "image" },
+  { id: 12, image: msm2, title: "MSM Lounge", category: "Project MSM", type: "image" },
+  { id: 13, image: msm3, title: "MSM Kitchen", category: "Project MSM", type: "image" },
 ];
 
 const Portfolio = () => {

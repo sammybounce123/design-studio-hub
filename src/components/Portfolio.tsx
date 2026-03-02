@@ -20,6 +20,7 @@ import caracal9 from "@/assets/caracal-9.jpg";
 import caracal10 from "@/assets/caracal-10.jpg";
 import msm1 from "@/assets/msm-1.jpg";
 import msm2 from "@/assets/msm-2.jpg";
+import msm3 from "@/assets/msm-3.jpg";
 
 interface PortfolioItem {
   id: number;
@@ -49,6 +50,7 @@ const portfolioItems: PortfolioItem[] = [
   { id: 16, image: caracal10, title: "Caracal Meeting Room", category: "Project Caracal", type: "image" },
   { id: 17, image: msm1, title: "MSM Living Room", category: "Project MSM", type: "image" },
   { id: 18, image: msm2, title: "MSM Lounge", category: "Project MSM", type: "image" },
+  { id: 19, image: msm3, title: "MSM Kitchen", category: "Project MSM", type: "image" },
 ];
 
 const Portfolio = () => {

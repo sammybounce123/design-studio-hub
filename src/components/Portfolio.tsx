@@ -27,20 +27,17 @@ interface PortfolioItem {
 
 const portfolioItems: PortfolioItem[] = [
   // Project Caracal
-  { id: 1, image: caracal1, title: "Caracal Reception", category: "Project Caracal", type: "image" },
-  { id: 2, image: caracal2, title: "Caracal Lounge", category: "Project Caracal", type: "image" },
-  { id: 3, image: caracal3, title: "Caracal Corridor", category: "Project Caracal", type: "image" },
-  { id: 4, image: caracal4, title: "Caracal Boardroom", category: "Project Caracal", type: "image" },
-  { id: 5, image: caracal5, title: "Caracal Conference", category: "Project Caracal", type: "image" },
-  { id: 6, image: caracal6, title: "Caracal Workspace", category: "Project Caracal", type: "image" },
-  { id: 7, image: caracal7, title: "Caracal Office", category: "Project Caracal", type: "image" },
-  { id: 8, image: caracal8, title: "Caracal Executive", category: "Project Caracal", type: "image" },
-  { id: 9, image: caracal9, title: "Caracal Pantry", category: "Project Caracal", type: "image" },
-  { id: 10, image: caracal10, title: "Caracal Meeting Room", category: "Project Caracal", type: "image" },
-  // Project MSM
-  { id: 11, image: msm1, title: "MSM Living Room", category: "Project MSM", type: "image" },
-  { id: 12, image: msm2, title: "MSM Lounge", category: "Project MSM", type: "image" },
-  { id: 13, image: msm3, title: "MSM Kitchen", category: "Project MSM", type: "image" },
+  { id: 1, image: caracal1, title: "Reception", category: "Project Caracal", type: "image" },
+  { id: 2, image: caracal2, title: "Reception Lounge", category: "Project Caracal", type: "image" },
+  { id: 3, image: caracal3, title: "Corridor", category: "Project Caracal", type: "image" },
+  { id: 4, image: caracal4, title: "Boardroom", category: "Project Caracal", type: "image" },
+  { id: 5, image: caracal5, title: "Conference Room", category: "Project Caracal", type: "image" },
+  { id: 6, image: caracal6, title: "Open Workspace", category: "Project Caracal", type: "image" },
+  { id: 7, image: caracal7, title: "Office Space", category: "Project Caracal", type: "image" },
+  { id: 8, image: caracal8, title: "Executive Office", category: "Project Caracal", type: "image" },
+  { id: 9, image: caracal9, title: "Pantry", category: "Project Caracal", type: "image" },
+  { id: 10, image: caracal10, title: "Meeting Room", category: "Project Caracal", type: "image" },
+  // Project MSM - upload images to populate
   // Residential Project - upload images to populate
 ];
 

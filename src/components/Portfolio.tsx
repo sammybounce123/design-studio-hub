@@ -15,6 +15,15 @@ import caracal10 from "@/assets/caracal-10.jpg";
 import msm1 from "@/assets/msm-1.jpg";
 import msm2 from "@/assets/msm-2.jpg";
 import msm3 from "@/assets/msm-3.jpg";
+import residential1 from "@/assets/residential-1.jpg";
+import residential2 from "@/assets/residential-2.jpg";
+import residential3 from "@/assets/residential-3.jpg";
+import residential4 from "@/assets/residential-4.jpg";
+import residential5 from "@/assets/residential-5.jpg";
+import residential6 from "@/assets/residential-6.jpg";
+import residential7 from "@/assets/residential-7.jpg";
+import residential8 from "@/assets/residential-8.jpg";
+import residential9 from "@/assets/residential-9.jpg";
 
 interface PortfolioItem {
   id: number;
@@ -37,8 +46,16 @@ const portfolioItems: PortfolioItem[] = [
   { id: 8, image: caracal8, title: "Executive Office", category: "Project Caracal", type: "image" },
   { id: 9, image: caracal9, title: "Pantry", category: "Project Caracal", type: "image" },
   { id: 10, image: caracal10, title: "Meeting Room", category: "Project Caracal", type: "image" },
-  // Project MSM - upload images to populate
-  // Residential Project - upload images to populate
+  // Residential Project
+  { id: 11, image: residential1, title: "Living Room", category: "Residential Project", type: "image" },
+  { id: 12, image: residential2, title: "Living Area", category: "Residential Project", type: "image" },
+  { id: 13, image: residential3, title: "TV Lounge", category: "Residential Project", type: "image" },
+  { id: 14, image: residential4, title: "Bedside Detail", category: "Residential Project", type: "image" },
+  { id: 15, image: residential5, title: "Bedroom Vanity", category: "Residential Project", type: "image" },
+  { id: 16, image: residential6, title: "Master Bedroom", category: "Residential Project", type: "image" },
+  { id: 17, image: residential7, title: "Accent Décor", category: "Residential Project", type: "image" },
+  { id: 18, image: residential8, title: "Guest Bedroom", category: "Residential Project", type: "image" },
+  { id: 19, image: residential9, title: "Sitting Area", category: "Residential Project", type: "image" },
 ];
 
 const Portfolio = () => {

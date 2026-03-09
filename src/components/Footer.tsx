@@ -1,5 +1,4 @@
-import { motion } from "framer-motion";
-import { Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+import { Instagram, Mail, Phone } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -8,26 +7,22 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <h3 className="font-serif text-3xl mb-6">DSR Interiors</h3>
+            <h3 className="font-serif text-3xl mb-6">DSR Studio</h3>
             <p className="text-primary-foreground/70 max-w-md mb-8 leading-relaxed">
-              Creating timeless, sophisticated interiors that reflect your
-              unique personality and elevate everyday living. Let's transform
-              your space together.
+              At DSR we don't just design spaces, we create experiences and enhance
+              functionality. Committed to turning your space into a timeless
+              masterpiece—where creativity, innovation, and functionality come
+              together seamlessly.
             </p>
             <div className="flex gap-4">
               <a
-                href="#"
+                href="https://instagram.com/designstylesbyramo"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-primary-foreground/20 flex items-center justify-center hover:bg-primary-foreground hover:text-foreground transition-colors duration-300"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full border border-primary-foreground/20 flex items-center justify-center hover:bg-primary-foreground hover:text-foreground transition-colors duration-300"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
               </a>
             </div>
           </div>
@@ -59,25 +54,19 @@ const Footer = () => {
             </p>
             <div className="space-y-4">
               <a
-                href="mailto:hello@eliseinteriors.com"
+                href="mailto:Designstylesbyramo@gmail.com"
                 className="flex items-center gap-3 text-primary-foreground/70 hover:text-primary-foreground transition-colors"
               >
                 <Mail className="w-5 h-5" />
-                hello@eliseinteriors.com
+                Designstylesbyramo@gmail.com
               </a>
               <a
-                href="tel:+12125551234"
+                href="tel:+2347082071811"
                 className="flex items-center gap-3 text-primary-foreground/70 hover:text-primary-foreground transition-colors"
               >
                 <Phone className="w-5 h-5" />
-                (212) 555-1234
+                07082071811
               </a>
-              <p className="flex items-start gap-3 text-primary-foreground/70">
-                <MapPin className="w-5 h-5 flex-shrink-0 mt-1" />
-                123 Design Avenue
-                <br />
-                New York, NY 10001
-              </p>
             </div>
           </div>
         </div>
@@ -85,7 +74,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-primary-foreground/50 text-sm">
-            © {new Date().getFullYear()} DSR Interiors. All rights reserved.
+            © {new Date().getFullYear()} DSR Studio. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm">
             <a

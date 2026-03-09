@@ -6,17 +6,17 @@ const testimonials = [
   {
     id: 1,
     name: "Sarah Mitchell",
-    role: "Homeowner, Manhattan",
+    role: "Homeowner",
     quote:
-      "Élise transformed our apartment into a sanctuary. Every detail was thoughtfully considered, from the custom millwork to the curated art pieces. It truly feels like home now.",
+      "DSR transformed our apartment into a sanctuary. Every detail was thoughtfully considered, from the custom millwork to the curated art pieces. It truly feels like home now.",
     rating: 5,
   },
   {
     id: 2,
     name: "James & Patricia Chen",
-    role: "Homeowners, Brooklyn",
+    role: "Homeowners",
     quote:
-      "Working with Élise was an absolute dream. They understood our vision from the first meeting and executed it beyond our expectations. Our friends can't stop complimenting the space.",
+      "Working with DSR Studio was an absolute dream. They understood our vision from the first meeting and executed it beyond our expectations. Our friends can't stop complimenting the space.",
     rating: 5,
   },
   {
@@ -24,7 +24,7 @@ const testimonials = [
     name: "Alexandra Beaumont",
     role: "Business Owner",
     quote:
-      "The attention to detail is unmatched. Élise didn't just design a space; they created an experience. Every room tells a story, and it's exactly what we envisioned.",
+      "The attention to detail is unmatched. DSR didn't just design a space; they created an experience. Every room tells a story, and it's exactly what we envisioned.",
     rating: 5,
   },
   {
@@ -32,7 +32,7 @@ const testimonials = [
     name: "Michael Torres",
     role: "Architect",
     quote:
-      "As an architect, I have high standards. Élise exceeded them. Their ability to blend functionality with beauty is remarkable. A true pleasure to collaborate with.",
+      "As an architect, I have high standards. DSR exceeded them. Their ability to blend functionality with beauty is remarkable. A true pleasure to collaborate with.",
     rating: 5,
   },
 ];
@@ -100,7 +100,6 @@ const Testimonials = () => {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="absolute inset-0 text-center"
               >
-                {/* Stars */}
                 <div className="flex justify-center gap-1 mb-6">
                   {[...Array(testimonials[current].rating)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 fill-accent text-accent" />
@@ -123,7 +122,6 @@ const Testimonials = () => {
             </AnimatePresence>
           </div>
 
-          {/* Navigation */}
           <div className="flex items-center justify-center gap-6 mt-12">
             <button
               onClick={prev}

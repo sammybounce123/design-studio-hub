@@ -9,7 +9,7 @@ const Hero = () => {
       <div className="absolute inset-0">
         <img
           src={heroImage}
-          alt="Luxury interior design"
+          alt="DSR Studio luxury interior design"
           className="w-full h-full object-cover"
         />
         <div
@@ -29,7 +29,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="label-refined mb-6 text-primary-foreground/80"
         >
-          Award-Winning Interior Design Studio
+          Interior Design Studio
         </motion.p>
 
         <motion.h1
@@ -38,9 +38,9 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="heading-display mb-8 text-primary-foreground"
         >
-          Crafting Spaces
+          Elevating
           <br />
-          <span className="italic">That Inspire</span>
+          <span className="italic">Experiences</span>
         </motion.h1>
 
         <motion.p
@@ -49,8 +49,8 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="body-elegant max-w-xl mx-auto mb-12 text-primary-foreground/90"
         >
-          We transform homes into sanctuaries of elegance and comfort, 
-          blending timeless design with modern sensibility.
+          A great design is about creating spaces that inspire, function
+          flawlessly, and tell a distinctive story.
         </motion.p>
 
         <motion.div

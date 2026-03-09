@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 import caracal1 from "@/assets/caracal-1.jpg";
 import caracal2 from "@/assets/caracal-2.jpg";
@@ -31,59 +31,87 @@ import residential7 from "@/assets/residential-7.jpg";
 import residential8 from "@/assets/residential-8.jpg";
 import residential9 from "@/assets/residential-9.jpg";
 
-interface PortfolioItem {
-  id: number;
-  image: string;
+interface PortfolioImage {
+  src: string;
   title: string;
-  category: string;
-  type: "image" | "video";
-  videoUrl?: string;
 }
 
-const portfolioItems: PortfolioItem[] = [
-  // Project Caracal
-  { id: 1, image: caracal1, title: "Reception", category: "Project Caracal", type: "image" },
-  { id: 2, image: caracal2, title: "Reception Lounge", category: "Project Caracal", type: "image" },
-  { id: 3, image: caracal3, title: "Corridor", category: "Project Caracal", type: "image" },
-  { id: 4, image: caracal4, title: "Boardroom", category: "Project Caracal", type: "image" },
-  { id: 5, image: caracal5, title: "Conference Room", category: "Project Caracal", type: "image" },
-  { id: 6, image: caracal6, title: "Open Workspace", category: "Project Caracal", type: "image" },
-  { id: 7, image: caracal7, title: "Office Space", category: "Project Caracal", type: "image" },
-  { id: 8, image: caracal8, title: "Executive Office", category: "Project Caracal", type: "image" },
-  { id: 9, image: caracal9, title: "Pantry", category: "Project Caracal", type: "image" },
-  { id: 10, image: caracal10, title: "Meeting Room", category: "Project Caracal", type: "image" },
-  // Project MSM
-  { id: 20, image: msm1, title: "Boardroom", category: "Project MSM", type: "image" },
-  { id: 21, image: msm2, title: "Shelf Detail", category: "Project MSM", type: "image" },
-  { id: 22, image: msm3, title: "Executive Office", category: "Project MSM", type: "image" },
-  { id: 23, image: msm4, title: "Lounge Detail", category: "Project MSM", type: "image" },
-  { id: 24, image: msm5, title: "Glass Corridor", category: "Project MSM", type: "image" },
-  { id: 25, image: msm6, title: "Open Workspace", category: "Project MSM", type: "image" },
-  { id: 26, image: msm7, title: "Office Hallway", category: "Project MSM", type: "image" },
-  { id: 27, image: msm8, title: "Break Room", category: "Project MSM", type: "image" },
-  { id: 28, image: msm9, title: "Reception", category: "Project MSM", type: "image" },
-  // Residential Project
-  { id: 11, image: residential1, title: "Living Room", category: "Residential Project", type: "image" },
-  { id: 12, image: residential2, title: "Living Area", category: "Residential Project", type: "image" },
-  { id: 13, image: residential3, title: "TV Lounge", category: "Residential Project", type: "image" },
-  { id: 14, image: residential4, title: "Bedside Detail", category: "Residential Project", type: "image" },
-  { id: 15, image: residential5, title: "Bedroom Vanity", category: "Residential Project", type: "image" },
-  { id: 16, image: residential6, title: "Master Bedroom", category: "Residential Project", type: "image" },
-  { id: 17, image: residential7, title: "Accent Décor", category: "Residential Project", type: "image" },
-  { id: 18, image: residential8, title: "Guest Bedroom", category: "Residential Project", type: "image" },
-  { id: 19, image: residential9, title: "Sitting Area", category: "Residential Project", type: "image" },
+interface Project {
+  name: string;
+  images: PortfolioImage[];
+}
+
+const projects: Project[] = [
+  {
+    name: "Project Caracal",
+    images: [
+      { src: caracal1, title: "Reception" },
+      { src: caracal2, title: "Reception Lounge" },
+      { src: caracal3, title: "Corridor" },
+      { src: caracal4, title: "Boardroom" },
+      { src: caracal5, title: "Conference Room" },
+      { src: caracal6, title: "Open Workspace" },
+      { src: caracal7, title: "Office Space" },
+      { src: caracal8, title: "Executive Office" },
+      { src: caracal9, title: "Pantry" },
+      { src: caracal10, title: "Meeting Room" },
+    ],
+  },
+  {
+    name: "Project MSM",
+    images: [
+      { src: msm1, title: "Boardroom" },
+      { src: msm2, title: "Shelf Detail" },
+      { src: msm3, title: "Executive Office" },
+      { src: msm4, title: "Lounge Detail" },
+      { src: msm5, title: "Glass Corridor" },
+      { src: msm6, title: "Open Workspace" },
+      { src: msm7, title: "Office Hallway" },
+      { src: msm8, title: "Break Room" },
+      { src: msm9, title: "Reception" },
+    ],
+  },
+  {
+    name: "Residential Project",
+    images: [
+      { src: residential1, title: "Living Room" },
+      { src: residential2, title: "Living Area" },
+      { src: residential3, title: "TV Lounge" },
+      { src: residential4, title: "Bedside Detail" },
+      { src: residential5, title: "Bedroom Vanity" },
+      { src: residential6, title: "Master Bedroom" },
+      { src: residential7, title: "Accent Décor" },
+      { src: residential8, title: "Guest Bedroom" },
+      { src: residential9, title: "Sitting Area" },
+    ],
+  },
 ];
 
 const Portfolio = () => {
-  const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null);
-  const [filter, setFilter] = useState<string>("all");
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const categories = ["all", ...new Set(portfolioItems.map((item) => item.category))];
+  const openGallery = useCallback((project: Project, startIndex: number) => {
+    setActiveProject(project);
+    setActiveIndex(startIndex);
+    document.body.style.overflow = "hidden";
+  }, []);
 
-  const filteredItems =
-    filter === "all"
-      ? portfolioItems
-      : portfolioItems.filter((item) => item.category === filter);
+  const closeGallery = useCallback(() => {
+    setActiveProject(null);
+    setActiveIndex(0);
+    document.body.style.overflow = "";
+  }, []);
+
+  const goNext = useCallback(() => {
+    if (!activeProject) return;
+    setActiveIndex((i) => (i + 1) % activeProject.images.length);
+  }, [activeProject]);
+
+  const goPrev = useCallback(() => {
+    if (!activeProject) return;
+    setActiveIndex((i) => (i - 1 + activeProject.images.length) % activeProject.images.length);
+  }, [activeProject]);
 
   return (
     <section id="portfolio" className="section-padding bg-secondary/30">
@@ -104,121 +132,153 @@ const Portfolio = () => {
           </p>
         </motion.div>
 
-        {/* Filter Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4 mb-12"
-        >
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setFilter(category)}
-              className={`label-refined px-6 py-3 transition-all duration-300 ${
-                filter === category
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-card hover:bg-muted"
-              }`}
+        {/* Project Sections — 3 preview images each */}
+        <div className="space-y-20">
+          {projects.map((project, pi) => (
+            <motion.div
+              key={project.name}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: pi * 0.1 }}
             >
-              {category}
-            </button>
-          ))}
-        </motion.div>
-
-        {/* Gallery Grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filteredItems.map((item, index) => (
-              <motion.div
-                key={item.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                className={`group cursor-pointer overflow-hidden ${
-                  index === 0 ? "md:col-span-2 md:row-span-2" : ""
-                }`}
-                onClick={() => setSelectedItem(item)}
-              >
-                <div className="relative overflow-hidden aspect-[4/3]">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors duration-500 flex items-center justify-center">
-                    {item.type === "video" && (
-                      <div className="w-16 h-16 rounded-full bg-primary-foreground/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <Play className="w-6 h-6 text-primary fill-current ml-1" />
+              <h3 className="font-serif text-2xl md:text-3xl mb-8 text-foreground">
+                {project.name}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {project.images.slice(0, 3).map((img, idx) => (
+                  <div
+                    key={idx}
+                    className="group relative cursor-pointer overflow-hidden aspect-[4/3] bg-muted"
+                    onClick={() => openGallery(project, idx)}
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors duration-500" />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-foreground/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                      <p className="font-serif text-sm text-primary-foreground">
+                        {img.title}
+                      </p>
+                    </div>
+                    {/* "View all" badge on 3rd image */}
+                    {idx === 2 && project.images.length > 3 && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <span className="label-refined text-primary-foreground bg-foreground/50 backdrop-blur-sm px-4 py-2 rounded-sm">
+                          View all {project.images.length} photos
+                        </span>
                       </div>
                     )}
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-foreground/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <p className="label-refined text-primary-foreground/80 mb-1">
-                      {item.category}
-                    </p>
-                    <h3 className="font-serif text-xl text-primary-foreground">
-                      {item.title}
-                    </h3>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
-      {/* Lightbox Modal */}
+      {/* Full Gallery Lightbox Modal */}
       <AnimatePresence>
-        {selectedItem && (
+        {activeProject && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-foreground/90 flex items-center justify-center p-4"
-            onClick={() => setSelectedItem(null)}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 bg-foreground/95 flex flex-col"
+            onClick={closeGallery}
           >
-            <button
-              className="absolute top-6 right-6 text-primary-foreground hover:text-accent transition-colors"
-              onClick={() => setSelectedItem(null)}
-            >
-              <X size={32} />
-            </button>
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="max-w-5xl w-full"
+            {/* Top bar */}
+            <div className="flex items-center justify-between px-4 sm:px-6 py-4 shrink-0">
+              <div>
+                <p className="font-serif text-lg sm:text-xl text-primary-foreground">
+                  {activeProject.name}
+                </p>
+                <p className="text-xs text-primary-foreground/50">
+                  {activeIndex + 1} / {activeProject.images.length}
+                </p>
+              </div>
+              <button
+                className="text-primary-foreground/70 hover:text-primary-foreground transition-colors p-2"
+                onClick={closeGallery}
+                aria-label="Close gallery"
+              >
+                <X size={28} />
+              </button>
+            </div>
+
+            {/* Main image area */}
+            <div
+              className="flex-1 flex items-center justify-center relative px-4 sm:px-16 pb-4 min-h-0"
               onClick={(e) => e.stopPropagation()}
             >
-              {selectedItem.type === "video" ? (
-                <div className="aspect-video">
-                  <iframe
-                    src={selectedItem.videoUrl}
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
+              {/* Prev button */}
+              <button
+                className="absolute left-2 sm:left-4 z-10 p-2 sm:p-3 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 backdrop-blur-sm text-primary-foreground transition-colors"
+                onClick={goPrev}
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={24} />
+              </button>
+
+              {/* Image */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.25 }}
+                  className="w-full h-full flex flex-col items-center justify-center"
+                >
+                  <img
+                    src={activeProject.images[activeIndex].src}
+                    alt={activeProject.images[activeIndex].title}
+                    className="max-w-full max-h-[calc(100vh-160px)] object-contain rounded-sm"
                   />
-                </div>
-              ) : (
-                <img
-                  src={selectedItem.image}
-                  alt={selectedItem.title}
-                  className="w-full h-auto"
-                />
-              )}
-              <div className="mt-4 text-center">
-                <p className="label-refined text-primary-foreground/60 mb-1">
-                  {selectedItem.category}
-                </p>
-                <h3 className="font-serif text-2xl text-primary-foreground">
-                  {selectedItem.title}
-                </h3>
+                  <p className="mt-3 font-serif text-sm text-primary-foreground/70">
+                    {activeProject.images[activeIndex].title}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Next button */}
+              <button
+                className="absolute right-2 sm:right-4 z-10 p-2 sm:p-3 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 backdrop-blur-sm text-primary-foreground transition-colors"
+                onClick={goNext}
+                aria-label="Next image"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
+
+            {/* Thumbnail strip */}
+            <div className="shrink-0 px-4 pb-4 overflow-x-auto">
+              <div className="flex gap-2 justify-center">
+                {activeProject.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveIndex(idx);
+                    }}
+                    className={`shrink-0 w-14 h-10 sm:w-16 sm:h-12 overflow-hidden rounded-sm transition-all duration-300 ${
+                      idx === activeIndex
+                        ? "ring-2 ring-primary-foreground opacity-100"
+                        : "opacity-40 hover:opacity-70"
+                    }`}
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

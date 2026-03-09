@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, X } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 import caracal1 from "@/assets/caracal-1.jpg";
 import caracal2 from "@/assets/caracal-2.jpg";
@@ -36,54 +36,81 @@ interface PortfolioItem {
   image: string;
   title: string;
   category: string;
-  type: "image" | "video";
-  videoUrl?: string;
 }
 
 const portfolioItems: PortfolioItem[] = [
-  // Commercial Projects - Project Caracal
-  { id: 1, image: caracal1, title: "Reception", category: "Project Caracal", type: "image" },
-  { id: 2, image: caracal2, title: "Reception Lounge", category: "Project Caracal", type: "image" },
-  { id: 3, image: caracal3, title: "Corridor", category: "Project Caracal", type: "image" },
-  { id: 4, image: caracal4, title: "Boardroom", category: "Project Caracal", type: "image" },
-  { id: 5, image: caracal5, title: "Conference Room", category: "Project Caracal", type: "image" },
-  { id: 6, image: caracal6, title: "Open Workspace", category: "Project Caracal", type: "image" },
-  { id: 7, image: caracal7, title: "Office Space", category: "Project Caracal", type: "image" },
-  { id: 8, image: caracal8, title: "Executive Office", category: "Project Caracal", type: "image" },
-  { id: 9, image: caracal9, title: "Pantry", category: "Project Caracal", type: "image" },
-  { id: 10, image: caracal10, title: "Meeting Room", category: "Project Caracal", type: "image" },
-  // Commercial Projects - Project MSM
-  { id: 20, image: msm1, title: "Boardroom", category: "Project MSM", type: "image" },
-  { id: 21, image: msm2, title: "Shelf Detail", category: "Project MSM", type: "image" },
-  { id: 22, image: msm3, title: "Executive Office", category: "Project MSM", type: "image" },
-  { id: 23, image: msm4, title: "Lounge Detail", category: "Project MSM", type: "image" },
-  { id: 24, image: msm5, title: "Glass Corridor", category: "Project MSM", type: "image" },
-  { id: 25, image: msm6, title: "Open Workspace", category: "Project MSM", type: "image" },
-  { id: 26, image: msm7, title: "Office Hallway", category: "Project MSM", type: "image" },
-  { id: 27, image: msm8, title: "Break Room", category: "Project MSM", type: "image" },
-  { id: 28, image: msm9, title: "Reception", category: "Project MSM", type: "image" },
-  // Residential Project
-  { id: 11, image: residential1, title: "Living Room", category: "Residential Project", type: "image" },
-  { id: 12, image: residential2, title: "Living Area", category: "Residential Project", type: "image" },
-  { id: 13, image: residential3, title: "TV Lounge", category: "Residential Project", type: "image" },
-  { id: 14, image: residential4, title: "Bedside Detail", category: "Residential Project", type: "image" },
-  { id: 15, image: residential5, title: "Bedroom Vanity", category: "Residential Project", type: "image" },
-  { id: 16, image: residential6, title: "Master Bedroom", category: "Residential Project", type: "image" },
-  { id: 17, image: residential7, title: "Accent Décor", category: "Residential Project", type: "image" },
-  { id: 18, image: residential8, title: "Guest Bedroom", category: "Residential Project", type: "image" },
-  { id: 19, image: residential9, title: "Sitting Area", category: "Residential Project", type: "image" },
+  { id: 1, image: caracal1, title: "Reception", category: "Project Caracal" },
+  { id: 2, image: caracal2, title: "Reception Lounge", category: "Project Caracal" },
+  { id: 3, image: caracal3, title: "Corridor", category: "Project Caracal" },
+  { id: 4, image: caracal4, title: "Boardroom", category: "Project Caracal" },
+  { id: 5, image: caracal5, title: "Conference Room", category: "Project Caracal" },
+  { id: 6, image: caracal6, title: "Open Workspace", category: "Project Caracal" },
+  { id: 7, image: caracal7, title: "Office Space", category: "Project Caracal" },
+  { id: 8, image: caracal8, title: "Executive Office", category: "Project Caracal" },
+  { id: 9, image: caracal9, title: "Pantry", category: "Project Caracal" },
+  { id: 10, image: caracal10, title: "Meeting Room", category: "Project Caracal" },
+  { id: 20, image: msm1, title: "Boardroom", category: "Project MSM" },
+  { id: 21, image: msm2, title: "Shelf Detail", category: "Project MSM" },
+  { id: 22, image: msm3, title: "Executive Office", category: "Project MSM" },
+  { id: 23, image: msm4, title: "Lounge Detail", category: "Project MSM" },
+  { id: 24, image: msm5, title: "Glass Corridor", category: "Project MSM" },
+  { id: 25, image: msm6, title: "Open Workspace", category: "Project MSM" },
+  { id: 26, image: msm7, title: "Office Hallway", category: "Project MSM" },
+  { id: 27, image: msm8, title: "Break Room", category: "Project MSM" },
+  { id: 28, image: msm9, title: "Reception", category: "Project MSM" },
+  { id: 11, image: residential1, title: "Living Room", category: "Residential Project" },
+  { id: 12, image: residential2, title: "Living Area", category: "Residential Project" },
+  { id: 13, image: residential3, title: "TV Lounge", category: "Residential Project" },
+  { id: 14, image: residential4, title: "Bedside Detail", category: "Residential Project" },
+  { id: 15, image: residential5, title: "Bedroom Vanity", category: "Residential Project" },
+  { id: 16, image: residential6, title: "Master Bedroom", category: "Residential Project" },
+  { id: 17, image: residential7, title: "Accent Décor", category: "Residential Project" },
+  { id: 18, image: residential8, title: "Guest Bedroom", category: "Residential Project" },
+  { id: 19, image: residential9, title: "Sitting Area", category: "Residential Project" },
 ];
 
+const PREVIEW_COUNT = 3;
+
 const Portfolio = () => {
-  const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null);
   const [filter, setFilter] = useState<string>("all");
+  const [galleryCategory, setGalleryCategory] = useState<string | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const categories = ["all", ...new Set(portfolioItems.map((item) => item.category))];
 
-  const filteredItems =
-    filter === "all"
-      ? portfolioItems
-      : portfolioItems.filter((item) => item.category === filter);
+  // For "all", show first 3 per category; for specific filter, show first 3
+  const previewItems = useMemo(() => {
+    if (filter === "all") {
+      const grouped: Record<string, PortfolioItem[]> = {};
+      portfolioItems.forEach((item) => {
+        if (!grouped[item.category]) grouped[item.category] = [];
+        grouped[item.category].push(item);
+      });
+      return Object.values(grouped).flatMap((items) => items.slice(0, PREVIEW_COUNT));
+    }
+    return portfolioItems.filter((item) => item.category === filter).slice(0, PREVIEW_COUNT);
+  }, [filter]);
+
+  // Full gallery items for the opened category
+  const galleryItems = useMemo(() => {
+    if (!galleryCategory) return [];
+    return portfolioItems.filter((item) => item.category === galleryCategory);
+  }, [galleryCategory]);
+
+  const openGallery = (item: PortfolioItem) => {
+    const categoryItems = portfolioItems.filter((i) => i.category === item.category);
+    const idx = categoryItems.findIndex((i) => i.id === item.id);
+    setGalleryCategory(item.category);
+    setActiveIndex(idx >= 0 ? idx : 0);
+  };
+
+  const closeGallery = () => {
+    setGalleryCategory(null);
+    setActiveIndex(0);
+  };
+
+  const goNext = () => setActiveIndex((prev) => (prev + 1) % galleryItems.length);
+  const goPrev = () => setActiveIndex((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
 
   return (
     <section id="portfolio" className="section-padding bg-secondary/30">
@@ -127,21 +154,19 @@ const Portfolio = () => {
           ))}
         </motion.div>
 
-        {/* Gallery Grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Preview Grid — 3 images per category */}
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
-            {filteredItems.map((item, index) => (
+            {previewItems.map((item, index) => (
               <motion.div
                 key={item.id}
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                className={`group cursor-pointer overflow-hidden ${
-                  index === 0 ? "md:col-span-2 md:row-span-2" : ""
-                }`}
-                onClick={() => setSelectedItem(item)}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
+                className="group cursor-pointer overflow-hidden"
+                onClick={() => openGallery(item)}
               >
                 <div className="relative overflow-hidden aspect-[4/3]">
                   <img
@@ -149,13 +174,7 @@ const Portfolio = () => {
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors duration-500 flex items-center justify-center">
-                    {item.type === "video" && (
-                      <div className="w-16 h-16 rounded-full bg-primary-foreground/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <Play className="w-6 h-6 text-primary fill-current ml-1" />
-                      </div>
-                    )}
-                  </div>
+                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors duration-500" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-foreground/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <p className="label-refined text-primary-foreground/80 mb-1">
                       {item.category}
@@ -171,52 +190,100 @@ const Portfolio = () => {
         </motion.div>
       </div>
 
-      {/* Lightbox Modal */}
+      {/* Half-screen Gallery Viewer */}
       <AnimatePresence>
-        {selectedItem && (
+        {galleryCategory && galleryItems.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-foreground/90 flex items-center justify-center p-4"
-            onClick={() => setSelectedItem(null)}
+            className="fixed inset-0 z-50 flex"
+            onClick={closeGallery}
           >
-            <button
-              className="absolute top-6 right-6 text-primary-foreground hover:text-accent transition-colors"
-              onClick={() => setSelectedItem(null)}
-            >
-              <X size={32} />
-            </button>
+            {/* Dark backdrop — left half */}
+            <div className="hidden md:block w-1/2 bg-foreground/80 backdrop-blur-sm" />
+
+            {/* Gallery panel — right half (full on mobile) */}
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="max-w-5xl w-full"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="w-full md:w-1/2 bg-background flex flex-col h-full"
               onClick={(e) => e.stopPropagation()}
             >
-              {selectedItem.type === "video" ? (
-                <div className="aspect-video">
-                  <iframe
-                    src={selectedItem.videoUrl}
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
+              {/* Panel header */}
+              <div className="flex items-center justify-between p-6 border-b border-border">
+                <div>
+                  <p className="label-refined text-muted-foreground mb-1">{galleryCategory}</p>
+                  <h3 className="font-serif text-xl">
+                    {galleryItems[activeIndex]?.title}
+                  </h3>
                 </div>
-              ) : (
-                <img
-                  src={selectedItem.image}
-                  alt={selectedItem.title}
-                  className="w-full h-auto"
-                />
-              )}
-              <div className="mt-4 text-center">
-                <p className="label-refined text-primary-foreground/60 mb-1">
-                  {selectedItem.category}
-                </p>
-                <h3 className="font-serif text-2xl text-primary-foreground">
-                  {selectedItem.title}
-                </h3>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">
+                    {activeIndex + 1} / {galleryItems.length}
+                  </span>
+                  <button
+                    onClick={closeGallery}
+                    className="ml-4 w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Main image */}
+              <div className="flex-1 relative flex items-center justify-center p-6 overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={galleryItems[activeIndex]?.id}
+                    src={galleryItems[activeIndex]?.image}
+                    alt={galleryItems[activeIndex]?.title}
+                    initial={{ opacity: 0, x: 40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -40 }}
+                    transition={{ duration: 0.3 }}
+                    className="max-w-full max-h-full object-contain rounded-sm"
+                  />
+                </AnimatePresence>
+
+                {/* Navigation arrows */}
+                <button
+                  onClick={goPrev}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/80 border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={goNext}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/80 border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Thumbnail strip */}
+              <div className="p-4 border-t border-border">
+                <div className="flex gap-2 overflow-x-auto pb-2">
+                  {galleryItems.map((item, idx) => (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveIndex(idx)}
+                      className={`flex-shrink-0 w-16 h-16 overflow-hidden rounded-sm transition-all duration-300 ${
+                        idx === activeIndex
+                          ? "ring-2 ring-primary opacity-100"
+                          : "opacity-50 hover:opacity-80"
+                      }`}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
               </div>
             </motion.div>
           </motion.div>

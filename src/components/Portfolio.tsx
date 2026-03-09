@@ -81,7 +81,12 @@ const Portfolio = () => {
   // For "all", show first 3 per category; for specific filter, show first 3
   const previewItems = useMemo(() => {
     if (filter === "all") {
-      return portfolioItems.slice(0, PREVIEW_COUNT);
+      const grouped: Record<string, PortfolioItem[]> = {};
+      portfolioItems.forEach((item) => {
+        if (!grouped[item.category]) grouped[item.category] = [];
+        grouped[item.category].push(item);
+      });
+      return Object.values(grouped).map((items) => items[0]);
     }
     return portfolioItems.filter((item) => item.category === filter).slice(0, PREVIEW_COUNT);
   }, [filter]);

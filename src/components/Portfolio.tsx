@@ -41,7 +41,7 @@ interface PortfolioItem {
 }
 
 const portfolioItems: PortfolioItem[] = [
-  // Project Caracal
+  // Commercial Projects - Project Caracal
   { id: 1, image: caracal1, title: "Reception", category: "Project Caracal", type: "image" },
   { id: 2, image: caracal2, title: "Reception Lounge", category: "Project Caracal", type: "image" },
   { id: 3, image: caracal3, title: "Corridor", category: "Project Caracal", type: "image" },
@@ -52,7 +52,7 @@ const portfolioItems: PortfolioItem[] = [
   { id: 8, image: caracal8, title: "Executive Office", category: "Project Caracal", type: "image" },
   { id: 9, image: caracal9, title: "Pantry", category: "Project Caracal", type: "image" },
   { id: 10, image: caracal10, title: "Meeting Room", category: "Project Caracal", type: "image" },
-  // Project MSM
+  // Commercial Projects - Project MSM
   { id: 20, image: msm1, title: "Boardroom", category: "Project MSM", type: "image" },
   { id: 21, image: msm2, title: "Shelf Detail", category: "Project MSM", type: "image" },
   { id: 22, image: msm3, title: "Executive Office", category: "Project MSM", type: "image" },
@@ -97,10 +97,10 @@ const Portfolio = () => {
           className="text-center mb-16"
         >
           <p className="label-refined mb-4">Our Portfolio</p>
-          <h2 className="heading-section mb-6">Spaces We've Transformed</h2>
+          <h2 className="heading-section mb-6">Transforming Spaces, Elevating Experiences</h2>
           <p className="body-elegant max-w-2xl mx-auto text-muted-foreground">
-            Explore our collection of bespoke interiors, each thoughtfully designed
-            to reflect our clients' unique personalities and lifestyles.
+            At DSR, we believe that exceptional interior design is a harmonious blend of
+            creativity, innovation, and functionality. Explore our collection of bespoke interiors.
           </p>
         </motion.div>
 

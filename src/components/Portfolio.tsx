@@ -197,75 +197,66 @@ const Portfolio = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex"
+            className="fixed inset-0 z-50 bg-foreground/90 backdrop-blur-sm flex flex-col"
             onClick={closeGallery}
           >
-            {/* Dark backdrop — left half */}
-            <div className="hidden md:block w-1/2 bg-foreground/80 backdrop-blur-sm" />
-
-            {/* Gallery panel — right half (full on mobile) */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="w-full md:w-1/2 bg-background flex flex-col h-full"
+            <div
+              className="flex flex-col h-full w-full"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Panel header */}
-              <div className="flex items-center justify-between p-6 border-b border-border">
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 py-4">
                 <div>
-                  <p className="label-refined text-muted-foreground mb-1">{galleryCategory}</p>
-                  <h3 className="font-serif text-xl">
+                  <p className="label-refined text-primary-foreground/60 mb-1">{galleryCategory}</p>
+                  <h3 className="font-serif text-xl text-primary-foreground">
                     {galleryItems[activeIndex]?.title}
                   </h3>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-primary-foreground/60">
                     {activeIndex + 1} / {galleryItems.length}
                   </span>
                   <button
                     onClick={closeGallery}
-                    className="ml-4 w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                    className="w-10 h-10 rounded-full border border-primary-foreground/20 flex items-center justify-center hover:bg-primary-foreground/10 transition-colors"
                   >
-                    <X className="w-5 h-5" />
+                    <X className="w-5 h-5 text-primary-foreground" />
                   </button>
                 </div>
               </div>
 
               {/* Main image */}
-              <div className="flex-1 relative flex items-center justify-center p-6 overflow-hidden">
+              <div className="flex-1 relative flex items-center justify-center px-16 overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={galleryItems[activeIndex]?.id}
                     src={galleryItems[activeIndex]?.image}
                     alt={galleryItems[activeIndex]?.title}
-                    initial={{ opacity: 0, x: 40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -40 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
                     className="max-w-full max-h-full object-contain rounded-sm"
                   />
                 </AnimatePresence>
 
-                {/* Navigation arrows */}
                 <button
                   onClick={goPrev}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/80 border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors"
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  <ChevronLeft className="w-5 h-5 text-primary-foreground" />
                 </button>
                 <button
                   onClick={goNext}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/80 border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors"
                 >
-                  <ChevronRight className="w-5 h-5" />
+                  <ChevronRight className="w-5 h-5 text-primary-foreground" />
                 </button>
               </div>
 
               {/* Thumbnail strip */}
-              <div className="p-4 border-t border-border">
-                <div className="flex gap-2 overflow-x-auto pb-2">
+              <div className="px-6 py-4">
+                <div className="flex gap-2 overflow-x-auto pb-2 justify-center">
                   {galleryItems.map((item, idx) => (
                     <button
                       key={item.id}
@@ -273,7 +264,7 @@ const Portfolio = () => {
                       className={`flex-shrink-0 w-16 h-16 overflow-hidden rounded-sm transition-all duration-300 ${
                         idx === activeIndex
                           ? "ring-2 ring-primary opacity-100"
-                          : "opacity-50 hover:opacity-80"
+                          : "opacity-40 hover:opacity-70"
                       }`}
                     >
                       <img
@@ -285,7 +276,7 @@ const Portfolio = () => {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
